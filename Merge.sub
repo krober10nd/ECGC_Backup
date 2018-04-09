@@ -1,0 +1,14 @@
+#!/bin/csh
+#$ -N FinishGrids
+#$ -q *@@westerink_d12chas_1992
+#$ -pe mpi-24 24
+#$ -M krober10@nd.edu
+#$ -m abe
+#$ -cwd 
+#$ -hold_jid 675738
+module load matlab/9.2
+
+date > run.begin
+matlab -nodisplay -nodesktop -r "run Mergem.m"
+matlab -nodisplay -nodesktop -r "run Example_Finishing.m"
+date > run.end

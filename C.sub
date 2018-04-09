@@ -1,0 +1,13 @@
+#!/bin/csh
+#$ -N BuildGrdc
+#$ -q *@@westerink_d12chas_1992
+#$ -pe mpi-24 24
+#$ -M krober10@nd.edu
+#$ -m abe
+#$ -cwd 
+
+module load matlab/9.2
+
+date > run.begin
+matlab -nodisplay -nodesktop -r "run ECGC_PAPERc.m"
+date > run.end

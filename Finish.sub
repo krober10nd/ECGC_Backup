@@ -1,0 +1,12 @@
+#!/bin/csh
+#$ -N Finishing
+#$ -q *@@westerink_d12chas_1992
+#$ -pe mpi-24 24
+#$ -M krober10@nd.edu
+#$ -m abe
+#$ -cwd 
+module load matlab/9.2
+
+date > run.begin
+matlab -nodisplay -nodesktop -r "run Example_Finishing.m"
+date > run.end
