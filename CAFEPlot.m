@@ -12,6 +12,10 @@ switch type
         disp('For amplitude');
         temp  = ncread(file1,'amp');
         a1 = temp(const,:)'; clearvars temp;
+    case('amppe')
+        disp('For amplitude with percent error');
+        temp  = ncread(file1,'amp');
+        a1 = temp(const,:)'; clearvars temp;
     case('phs')
         disp('For phase');
         temp  = ncread(file1,'phs');
@@ -23,6 +27,12 @@ t2 = double(ncread(file2,'element')');
 p2 = [x2,y2] ;
 switch type
     case('amp')
+        temp  = ncread(file2,'amp');
+        a2 = temp(const,:)'; clearvars temp;
+        F  = scatteredInterpolant(x2,y2,a2);
+        clearvars a2;
+        a2 = F(x1,y1);
+    case('amppe')
         temp  = ncread(file2,'amp');
         a2 = temp(const,:)'; clearvars temp;
         F  = scatteredInterpolant(x2,y2,a2);
@@ -66,16 +76,16 @@ switch type
         error = aa2 - aa1 ;
     case('amppe')
         bins = -5:1:5;
-        error = 100.*((aa2 - aa1)./aa1); 
+        error = 100.*((aa2 - aa1)./aa1);
     case('phs')
         bins = -10:1:10;
         error = aa2 - aa1 ;
 end
 
-% % DEBUG 
-% figure; 
-% fastscatter(pmid1(:,1),pmid1(:,2),error); 
-% cmocean('balance',9); colorbar; 
+% % DEBUG
+% figure;
+% fastscatter(pmid1(:,1),pmid1(:,2),error);
+% cmocean('balance',9); colorbar;
 % figure;
 % % END DEBUG
 
