@@ -73,12 +73,15 @@ end
 switch type
     case('amp')
         bins = -0.10:0.01:0.10;
+        bincenters = bins(1:end-1)+(diff(bins)/2);
         error = aa2 - aa1 ;
     case('amppe')
         bins = -5:1:5;
+        bincenters = bins(1:end-1)+(diff(bins)/2);
         error = 100.*((aa2 - aa1)./aa1);
     case('phs')
         bins = -10:1:10;
+        bincenters = bins(1:end-1)+(diff(bins)/2);
         error = aa2 - aa1 ;
 end
 
@@ -90,14 +93,15 @@ end
 % % END DEBUG
 
 binmap = discretize(error,bins);
-for i = 1 : length(bins)
+for i = 1 : length(bins)-1
     ix=find(binmap==i);
     NumInBin=length(find(binmap==i));
     areaOfErr(i)=NumInBin*sum(area1(ix));
 end
-totalArea = sum(area1)*length(t1);
+valid = ~isnan(binmap); 
+totalArea = sum(area1(valid))*sum(valid); 
 % cumulative area fraction
-hold on;h= plot(bins,100.*(areaOfErr./totalArea),'color',color,'linewi',2);
+hold on;h= plot(bincenters,100.*(areaOfErr./totalArea),'color',color,'linewi',2);
 switch type
     case('amp')
         % decorations
